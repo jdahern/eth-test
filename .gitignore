@@ -13,7 +13,7 @@ packages/react-app/src/contracts/*
 packages/hardhat/cache*
 packages/**/data
 !packages/react-app/src/contracts/contracts.js
-
+data
 
 # ts
 packages/hardhat-ts/cache
