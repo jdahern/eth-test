@@ -1,0 +1,16 @@
+version: "3"
+services:
+  hardhat:
+    restart: unless-stopped
+    build: ./docker/Hardhat
+    volumes:
+      - ./:/code:cached
+    ports:
+      - "8545:8545"
+  react-app:
+    restart: unless-stopped
+    build: ./docker/Frontend
+    volumes:
+      - ./:/code:cached
+    ports:
+      - "3000:3000"

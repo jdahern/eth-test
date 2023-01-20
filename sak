@@ -1,0 +1,150 @@
+#!/bin/bash
+
+
+#######################################
+# FUNCTIONS
+#######################################
+
+# Build all of the images or the specified one
+build () {
+    docker compose build "${@:1}"
+}
+
+# Remove the entire Docker environment
+destroy () {
+    read -p "This will delete containers, volumes and images. Are you sure? [y/N]: " -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit; fi
+    docker compose down -v --rmi all --remove-orphans
+}
+
+# Stop and destroy all containers
+down () {
+    docker compose down "${@:1}"
+}
+
+# Create .env from .env.example
+env () {
+    if [ ! -f .env ]; then
+        cp .env.example .env
+    fi
+}
+
+# Initialise the Docker environment and the application
+init () {
+    env \
+        && down -v \
+        && hardhat install \
+        && build \
+        && deploy \
+        && start
+}
+
+# Display and tail the logs of all containers or the specified one's
+logs () {
+    docker compose logs -f "${@:1}"
+}
+
+# Restart the containers
+restart () {
+    stop && start
+}
+
+# Start the containers
+start () {
+    docker compose up -d
+}
+
+# Stop the containers
+stop () {
+    docker compose stop
+}
+
+# Update the Docker environment
+update () {
+    git pull \
+        && build \
+        && react install \
+        && start
+}
+
+# Run a Yarn command
+hardhat () {
+    docker compose run --rm hardhat yarn "${@:1}"
+}
+
+# Run a Yarn command
+react () {
+    docker compose run --rm react-app yarn "${@:1}"
+}
+
+# deploy the contract
+deploy () {
+   hardhat run deploy
+}
+
+
+#######################################
+# MENU
+#######################################
+
+case "$1" in
+    build)
+        build "${@:2}"
+        ;;
+    destroy)
+        destroy
+        ;;
+    down)
+        down "${@:2}"
+        ;;
+    init)
+        init
+        ;;
+    logs)
+        logs "${@:2}"
+        ;;
+    restart)
+        restart
+        ;;
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    update)
+        update
+        ;;
+    hardhat)
+        hardhat "${@:2}"
+        ;;
+    react)
+        react "${@:2}"
+        ;;
+    deploy)
+        deploy
+        ;;
+    *)
+        cat << EOF
+Command line interface for the Docker-based web development environment Swiss Army Knife (SAK).
+Usage:
+    sak <command> [options] [arguments]
+Available commands:
+    build [image] ............................. Build all of the images or the specified one
+    destroy ................................... Remove the entire Docker environment
+    down [-v] ................................. Stop and destroy all containers
+                                                Options:
+                                                    -v .................... Destroy the volumes as well
+    init ...................................... Initialise the Docker environment and the application
+    logs [container] .......................... Display and tail the logs of all containers or the specified one's
+    restart ................................... Restart the containers
+    start ..................................... Start the containers
+    stop ...................................... Stop the containers
+    update .................................... Update the Docker environment
+    hardhat ................................... Run a Yarn command on the Hardhat container
+    react ..................................... Run a Yarn command on the React container
+    deploy .................................... Deploy the contract
+EOF
+        exit
+        ;;
+esac

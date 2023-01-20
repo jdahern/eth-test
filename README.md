@@ -15,39 +15,34 @@ Prerequisites:
 
 # 🏄‍♂️ Quick Start
 
-> 1️⃣ clone/fork:
+### 1️⃣ clone/fork:
 
 ```bash
 git clone https://github.com/jdahern/eth-test.git
 ```
 
-> 2️⃣ install and start your 👷‍ Hardhat chain:
+### 2️⃣ install all the dependencies and start your container:
 
 ```bash
-cd scaffold-eth
-yarn install
-yarn chain
+sak init
 ```
 
-> 3️⃣ in a second terminal window, start your 📱 frontend:
-
-🚨 if your contracts are not deployed to localhost, you will need to update the default network in `App.jsx` to match your default network in `hardhat-config.js`.
+### 3️⃣ 🛰 deploy your contract:
 
 ```bash
-cd scaffold-eth
-yarn start
+sak hardhat deploy
 ```
 
-> 4️⃣ in a third terminal window, 🛰 deploy your contract:
+### 4️⃣ TBD
+
+📱 Open http://localhost:3000 to see the app
+
+
+# 📚 Documentation
 
 🚨 if you are not deploying to localhost, you will need to run `yarn generate` (using node v16.x) first and then fund the deployer account. To view account balances, run `yarn account`. You will aslo need to update `hardhat-config.js` with the correct default network.
 
-👀 Side Quest: we need to update this process to use node v18.x 🪄
-
-```bash
-cd scaffold-eth
-yarn deploy
-```
+🚨 if your contracts are not deployed to localhost, you will need to update the default network in `App.jsx` to match your default network in `hardhat-config.js`.
 
 🔏 Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
 
@@ -55,11 +50,7 @@ yarn deploy
 
 💼 Edit your deployment scripts in `packages/hardhat/deploy`
 
-📱 Open http://localhost:3000 to see the app
-
 🚨📡 To deploy to a public domain, use `yarn surge`. You will need to have a surge account and have the surge CLI installed. There is also the option to deploy to IPFS using `yarn ipfs` and `yarn s3` to deploy to an AWS bucket 🪣 There are scripts in the `packages/react-app/src/scripts` folder to help with this.`
-
-# 📚 Documentation
 
 Documentation, tutorials, challenges, and many more resources, visit: [docs.scaffoldeth.io](https://docs.scaffoldeth.io)
 
@@ -107,7 +98,3 @@ Check out all the [active branches](https://github.com/scaffold-eth/scaffold-eth
 
 # 🏃💨 Speedrun Ethereum
 Register as a builder [here](https://speedrunethereum.com) and start on some of the challenges and build a portfolio.
-
-# 💬 Support Chat
-
-Join the telegram [support chat 💬](https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA) or buidlguidl [discord](https://discord.gg/pRsr6rwG) to ask questions and find others building with 🏗 scaffold-eth!
