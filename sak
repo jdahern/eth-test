@@ -22,17 +22,10 @@ down () {
     docker compose down "${@:1}"
 }
 
-# Create .env from .env.example
-env () {
-    if [ ! -f .env ]; then
-        cp .env.example .env
-    fi
-}
 
 # Initialise the Docker environment and the application
 init () {
-    env \
-        && down -v \
+    down -v \
         && hardhat install \
         && build \
         && deploy \
@@ -67,19 +60,24 @@ update () {
         && start
 }
 
-# Run a Yarn command
+# Run a command
 hardhat () {
-    docker compose run --rm hardhat yarn "${@:1}"
+    docker compose run --rm hardhat "${@:1}"
 }
 
-# Run a Yarn command
+# Run a command
 react () {
-    docker compose run --rm react-app yarn "${@:1}"
+    docker compose run --rm react-app "${@:1}"
+}
+
+# Run a ipfs command
+ipfs () {
+    docker compose run --rm ipfs ipfs "${@:1}"
 }
 
 # deploy the contract
 deploy () {
-   hardhat run deploy
+   hardhat yarn run deploy
 }
 
 
@@ -115,6 +113,9 @@ case "$1" in
     update)
         update
         ;;
+    ipfs)
+        ipfs "${@:2}"
+        ;;
     hardhat)
         hardhat "${@:2}"
         ;;
@@ -130,19 +131,22 @@ Command line interface for the Docker-based web development environment Swiss Ar
 Usage:
     sak <command> [options] [arguments]
 Available commands:
+    init ...................................... Initialise the Docker environment and the application
     build [image] ............................. Build all of the images or the specified one
     destroy ................................... Remove the entire Docker environment
     down [-v] ................................. Stop and destroy all containers
                                                 Options:
                                                     -v .................... Destroy the volumes as well
-    init ...................................... Initialise the Docker environment and the application
     logs [container] .......................... Display and tail the logs of all containers or the specified one's
     restart ................................... Restart the containers
     start ..................................... Start the containers
     stop ...................................... Stop the containers
     update .................................... Update the Docker environment
-    hardhat ................................... Run a Yarn command on the Hardhat container
-    react ..................................... Run a Yarn command on the React container
+
+    hardhat ................................... Run a command on the Hardhat container
+    react ..................................... Run a command on the React container
+    ipfs ...................................... Run an ipfs command on the IPFS container (SEE https://docs.ipfs.tech/reference/kubo/cli/)
+
     deploy .................................... Deploy the contract
 EOF
         exit
