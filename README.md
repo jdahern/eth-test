@@ -18,6 +18,7 @@ Prerequisites:
 ```bash
 git clone https://github.com/jdahern/eth-test.git
 cd eth-test
+cp .example.env .env
 bash ./sak init
 bash ./sak deploy
 ```
@@ -26,7 +27,7 @@ bash ./sak deploy
 
 # Full Start
 
-### 1️⃣ (optional) Add the project Swiss Army Knife (SAK):
+### 🇨🇭 (optional) Add the project Swiss Army Knife (SAK):
 
 Add the following function to your local `.bashrc` file or `.zshrc` and replace `/PATH/TO/YOUR/PROJECT` with the absolute directory to your project :
 
@@ -36,20 +37,27 @@ function sak {
     cd -
 }
 ```
+### 💾 Copy the example env
 
-### 2️⃣ install all the dependencies and start your containers:
+```bash
+cp .example.env .env
+```
+
+If you want to also run the subgraph nodes, uncomment the `COMPOSE_PROFILES` line
+
+### ⏬ Install all the dependencies and start your containers:
 
 ```bash
 sak init
 ```
 
-### 3️⃣ 🛰 deploy your contract:
+### 🛰 deploy your contract:
 
 ```bash
 sak deploy
 ```
 
-### 4️⃣ TBD
+### View the app
 
 📱 Open http://localhost:3000 to see the app
 

@@ -1,39 +1,40 @@
 version: "3"
 services:
   hardhat:
-    restart: unless-stopped
     build: ./packages/hardhat
+    restart: unless-stopped
     volumes:
       - ./:/code:cached
     ports:
       - "8545:8545" # Standard port for interacting with the blockchain
 
   react-app: # The frontend app
-    restart: unless-stopped
     build: ./packages/react-app
+    restart: unless-stopped
     volumes:
       - ./:/code:cached
     ports:
       - "3000:3000"
 
   yarn: # the control node that runs yarn commands
-    restart: "no"
-    build: ./packages/react-app
+    build: ./
+    profiles: ["cli"]
     volumes:
       - ./:/code:cached
 
   graph-node: # Provides a sakgraphQL interface for the blockchain (Not required)
-    restart: unless-stopped
     image: graphprotocol/graph-node:latest
+    restart: unless-stopped
+    profiles: ["subgraph"]
+    depends_on:
+      - ipfs
+      - postgres
     ports:
       - "8000:8000"
       - "8001:8001"
       - "8020:8020"
       - "8030:8030"
       - "8040:8040"
-    depends_on:
-      - ipfs
-      - postgres
     environment:
       postgres_host: postgres
       postgres_user: graph-node
@@ -46,8 +47,9 @@ services:
       - "host.docker.internal:host-gateway"
 
   postgres: # Used to support the graphQL node
-    restart: unless-stopped
     image: postgres
+    restart: unless-stopped
+    profiles: ["subgraph"]
     ports:
       - "5432:5432"
     command: ["postgres", "-cshared_preload_libraries=pg_stat_statements"]
@@ -59,8 +61,9 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 
   ipfs: # used for playing around and the graph node
-    restart: unless-stopped
     image: ipfs/kubo:latest
+    restart: unless-stopped
+    profiles: ["subgraph"]
     environment:
       SWARM_KEY: ${SWARM_KEY}
     ports:
