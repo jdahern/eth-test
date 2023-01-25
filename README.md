@@ -1,4 +1,4 @@
-# 🏗 Scaffold-ETH
+# 🏗 Jeff's Docker version of Scaffold-ETH
 
 > everything you need to build on Ethereum! 🚀
 
@@ -16,6 +16,7 @@ Prerequisites:
 
 # 🏄‍♂️ Quick Start
 
+### 🖥️ Run the following shell commands
 ```bash
 git clone https://github.com/jdahern/eth-test.git
 cd eth-test
@@ -24,7 +25,9 @@ bash ./sak init
 bash ./sak deploy
 ```
 
-📱 Open http://localhost:3000 to see the app
+### 📱 Open http://localhost:3000 to see the app
+
+### ↔️ Connect [Metamask to Hardhat](https://medium.com/@kaishinaw/connecting-metamask-with-a-local-hardhat-network-7d8cea604dc6)
 
 # Full Start
 
@@ -44,13 +47,21 @@ function sak {
 cp .example.env .env
 ```
 
-If you want to also run the subgraph nodes, uncomment the `COMPOSE_PROFILES` line
+If you want to also run the subgraph nodes, uncomment the `COMPOSE_PROFILES` line in your `.env` file
 
 ### ⏬ Install all the dependencies and start your containers:
 
 ```bash
 sak init
 ```
+This command will 
+* Shut down any containers that are currently running
+* Rebuild all the docker containers
+* Install all required dependencies 
+* Start your docker containers back up
+
+This is safe to run any time
+
 
 ### 🛰 deploy your contract:
 
