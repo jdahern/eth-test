@@ -1,6 +1,30 @@
 #!/bin/bash
 
+help () {
+cat << EOF
+Command line interface for the Docker-based web development environment Swiss Army Knife (SAK).
+Usage:
+    sak <command> [options] [arguments]
+Available commands:
+    init ...................................... Initialise the Docker environment and the application
+    build [image] ............................. Build all of the images or the specified one
+    destroy ................................... Remove the entire Docker environment
+    down [-v] ................................. Stop and destroy all containers
+                                                Options:
+                                                    -v .................... Destroy the volumes as well
+    logs [container] .......................... Display and tail the logs of all containers or the specified one's
+    restart ................................... Restart the containers
+    start ..................................... Start the containers
+    stop ...................................... Stop the containers
+    update .................................... Update the Docker environment
 
+    yarn ...................................... Run a yarn command in the container
+    ipfs ...................................... Run an ipfs command on the IPFS container (SEE https://docs.ipfs.tech/reference/kubo/cli/)
+
+    deploy .................................... Deploy the contract
+EOF
+        exit
+}
 #######################################
 # FUNCTIONS
 #######################################
@@ -26,9 +50,8 @@ down () {
 # Initialise the Docker environment and the application
 init () {
     down -v \
-        && hardhat install \
         && build \
-        && deploy \
+        && yarn install \
         && start
 }
 
@@ -56,18 +79,13 @@ stop () {
 update () {
     git pull \
         && build \
-        && react install \
+        && yarn install \
         && start
 }
 
 # Run a command
-hardhat () {
-    docker compose run --rm hardhat "${@:1}"
-}
-
-# Run a command
-react () {
-    docker compose run --rm react-app "${@:1}"
+yarn () {
+    docker compose run --rm yarn yarn "${@:1}"
 }
 
 # Run a ipfs command
@@ -77,7 +95,7 @@ ipfs () {
 
 # deploy the contract
 deploy () {
-   hardhat yarn run deploy
+   yarn run deploy-and-graph
 }
 
 
@@ -116,39 +134,13 @@ case "$1" in
     ipfs)
         ipfs "${@:2}"
         ;;
-    hardhat)
-        hardhat "${@:2}"
-        ;;
-    react)
-        react "${@:2}"
+    yarn)
+        yarn "${@:2}"
         ;;
     deploy)
         deploy
         ;;
     *)
-        cat << EOF
-Command line interface for the Docker-based web development environment Swiss Army Knife (SAK).
-Usage:
-    sak <command> [options] [arguments]
-Available commands:
-    init ...................................... Initialise the Docker environment and the application
-    build [image] ............................. Build all of the images or the specified one
-    destroy ................................... Remove the entire Docker environment
-    down [-v] ................................. Stop and destroy all containers
-                                                Options:
-                                                    -v .................... Destroy the volumes as well
-    logs [container] .......................... Display and tail the logs of all containers or the specified one's
-    restart ................................... Restart the containers
-    start ..................................... Start the containers
-    stop ...................................... Stop the containers
-    update .................................... Update the Docker environment
-
-    hardhat ................................... Run a command on the Hardhat container
-    react ..................................... Run a command on the React container
-    ipfs ...................................... Run an ipfs command on the IPFS container (SEE https://docs.ipfs.tech/reference/kubo/cli/)
-
-    deploy .................................... Deploy the contract
-EOF
-        exit
+        help
         ;;
 esac

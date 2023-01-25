@@ -6,15 +6,24 @@ services:
     volumes:
       - ./:/code:cached
     ports:
-      - "8545:8545"
-  react-app:
+      - "8545:8545" # Standard port for interacting with the blockchain
+
+  react-app: # The frontend app
     restart: unless-stopped
     build: ./packages/react-app
     volumes:
       - ./:/code:cached
     ports:
       - "3000:3000"
-  graph-node:
+
+  yarn: # the control node that runs yarn commands
+    restart: "no"
+    build: ./packages/react-app
+    volumes:
+      - ./:/code:cached
+
+  graph-node: # Provides a sakgraphQL interface for the blockchain (Not required)
+    restart: unless-stopped
     image: graphprotocol/graph-node:latest
     ports:
       - "8000:8000"
@@ -35,7 +44,9 @@ services:
       GRAPH_LOG: info
     extra_hosts:
       - "host.docker.internal:host-gateway"
-  postgres:
+
+  postgres: # Used to support the graphQL node
+    restart: unless-stopped
     image: postgres
     ports:
       - "5432:5432"
@@ -46,13 +57,16 @@ services:
       POSTGRES_DB: graph-node
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
-  ipfs:
-    build: ./packages/ipfs
+
+  ipfs: # used for playing around and the graph node
+    restart: unless-stopped
+    image: ipfs/kubo:latest
     environment:
       SWARM_KEY: ${SWARM_KEY}
     ports:
-      - "5001:5001"
-      - "8080:8080"
+      - "127.0.0.1:5001:5001"
+      - "127.0.0.1:8080:8080"
+      - "4001:4001/tcp"
+      - "4001:4001/udp"
     volumes:
-      - ./data/ipfs:/data/ipfs
-
+      - ./data/ipfs:/data/ipfs:cached

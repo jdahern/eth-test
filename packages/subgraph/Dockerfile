@@ -3,4 +3,4 @@ RUN mkdir -p /code
 WORKDIR /code
 ADD ../.. /code
 EXPOSE 3000
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "run-graph-node" ]

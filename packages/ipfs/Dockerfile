@@ -1,4 +1,4 @@
-FROM ipfs/go-ipfs
+FROM ipfs/kubo
 
 # The setup.sh script is used to setup private IPFS and replaces the default start_ipfs
 # file provided by the ipfs/go-ipfs image
