@@ -37,9 +37,7 @@ function sak {
 }
 ```
 
-
-
-### 2️⃣ install all the dependencies and start your container:
+### 2️⃣ install all the dependencies and start your containers:
 
 ```bash
 sak init
