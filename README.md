@@ -8,10 +8,11 @@
 
 
 Prerequisites: 
+* [Git](https://git-scm.com/downloads)
 * [Docker desktop](https://docs.docker.com/get-docker/)
 * [MetaMask](https://metamask.io/download/) 
 * [Metamask connected to hardhat](https://medium.com/@kaishinaw/connecting-metamask-with-a-local-hardhat-network-7d8cea604dc6)
-* [Git](https://git-scm.com/downloads)
+
 
 # 🏄‍♂️ Quick Start
 
