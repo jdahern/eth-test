@@ -9,7 +9,7 @@ const createProvider = async url => {
   return p;
 };
 
-export default function useStaticJsonRPC(urlArray, localProvider = null) {
+export default function useStaticJsonRPC(urlArray) {
   const [provider, setProvider] = useState(null);
 
   const handleProviders = useCallback(async () => {
@@ -25,16 +25,9 @@ export default function useStaticJsonRPC(urlArray, localProvider = null) {
   }, [urlArray]);
 
   useEffect(() => {
-    // Re-use the localProvider if it's mainnet (to use only one instance of it)
-    if (localProvider && localProvider?._network.chainId === 1) {
-      setProvider(localProvider);
-      return;
-    }
-
     handleProviders();
-
     // eslint-disable-next-line
-  }, [JSON.stringify(urlArray), localProvider]);
+  }, [JSON.stringify(urlArray)]);
 
   return provider;
 }

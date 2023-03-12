@@ -1,28 +1,13 @@
 // MY INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
-export const INFURA_ID = process.env.REACT_APP_INFURA_KEY ?? "460f40a260564ac4a4f4b3fffb032dad";
-// My Alchemy Key, swap in yours from https://dashboard.alchemyapi.io/
-export const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY ?? "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
+export const INFURA_ID = "460f40a260564ac4a4f4b3fffb032dad";
 
 // MY ETHERSCAN_ID, SWAP IN YOURS FROM https://etherscan.io/myapikey
-export const ETHERSCAN_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
+export const ETHERSCAN_KEY = "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
 
 // BLOCKNATIVE ID FOR Notify.js:
-export const BLOCKNATIVE_DAPPID = process.env.REACT_APP_BLOCKNATIVE_DAPP_ID ?? "0b58206a-f3c0-4701-a62f-73c7243e8c77";
+export const BLOCKNATIVE_DAPPID = "0b58206a-f3c0-4701-a62f-73c7243e8c77";
 
-// Docker Hardhat Host
-export const HARDHAT_HOST = process.env.REACT_APP_HARDHAT_HOST ?? "http://localhost";
-
-/*
-Decrease the number of RPC calls by passing this value to hooks
-with pollTime (useContractReader, useBalance, etc.).
-Set it to 0 to disable it and make RPC calls "onBlock".
-Note: this is not used when you are in the local hardhat chain.
-*/
-export const RPC_POLL_TIME = 30000;
-
-const localRpcUrl = process.env.REACT_APP_CODESPACES
-  ? `https://${window.location.hostname.replace("3000", "8545")}`
-  : "http://" + (global.window ? window.location.hostname : "localhost") + ":8545";
+export const ALCHEMY_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
 export const NETWORKS = {
   localhost: {
@@ -30,7 +15,7 @@ export const NETWORKS = {
     color: "#666666",
     chainId: 31337,
     blockExplorer: "",
-    rpcUrl: localRpcUrl,
+    rpcUrl: "http://" + (global.window ? window.location.hostname : "localhost") + ":8545",
   },
   mainnet: {
     name: "mainnet",
@@ -38,6 +23,30 @@ export const NETWORKS = {
     chainId: 1,
     rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
     blockExplorer: "https://etherscan.io/",
+  },
+  kovan: {
+    name: "kovan",
+    color: "#7003DD",
+    chainId: 42,
+    rpcUrl: `https://kovan.infura.io/v3/${INFURA_ID}`,
+    blockExplorer: "https://kovan.etherscan.io/",
+    faucet: "https://gitter.im/kovan-testnet/faucet", // https://faucet.kovan.network/
+  },
+  rinkeby: {
+    name: "rinkeby",
+    color: "#e0d068",
+    chainId: 4,
+    rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`,
+    faucet: "https://faucet.rinkeby.io/",
+    blockExplorer: "https://rinkeby.etherscan.io/",
+  },
+  ropsten: {
+    name: "ropsten",
+    color: "#F60D09",
+    chainId: 3,
+    faucet: "https://faucet.ropsten.be/",
+    blockExplorer: "https://ropsten.etherscan.io/",
+    rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`,
   },
   goerli: {
     name: "goerli",
@@ -47,25 +56,15 @@ export const NETWORKS = {
     blockExplorer: "https://goerli.etherscan.io/",
     rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`,
   },
-  gnosis: {
-    name: "gnosis",
+  xdai: {
+    name: "xdai",
     color: "#48a9a6",
     chainId: 100,
     price: 1,
     gasPrice: 1000000000,
-    rpcUrl: "https://rpc.gnosischain.com",
-    faucet: "https://gnosisfaucet.com",
-    blockExplorer: "https://gnosisscan.io",
-  },
-  chiado: {
-    name: "chiado",
-    color: "#48a9a6",
-    chainId: 10200,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: "https://rpc.chiadochain.net",
-    faucet: "https://gnosisfaucet.com",
-    blockExplorer: "https://blockscout.chiadochain.net",
+    rpcUrl: "https://dai.poa.network",
+    faucet: "https://xdai-faucet.top/",
+    blockExplorer: "https://blockscout.com/poa/xdai/",
   },
   polygon: {
     name: "polygon",
@@ -101,12 +100,12 @@ export const NETWORKS = {
     rpcUrl: "http://" + (global.window ? window.location.hostname : "localhost") + ":8545",
     gasPrice: 0,
   },
-  goerliOptimism: {
-    name: "goerliOptimism",
+  kovanOptimism: {
+    name: "kovanOptimism",
     color: "#f01a37",
-    chainId: 420,
-    blockExplorer: "https://optimism.io",
-    rpcUrl: `https://goerli.optimism.io/`,
+    chainId: 69,
+    blockExplorer: "https://kovan-optimistic.etherscan.io/",
+    rpcUrl: `https://kovan.optimism.io`,
     gasPrice: 0,
   },
   optimism: {
@@ -115,27 +114,6 @@ export const NETWORKS = {
     chainId: 10,
     blockExplorer: "https://optimistic.etherscan.io/",
     rpcUrl: `https://mainnet.optimism.io`,
-  },
-  goerliArbitrum: {
-    name: "goerliArbitrum",
-    color: "#28a0f0",
-    chainId: 421613,
-    blockExplorer: "https://goerli-rollup-explorer.arbitrum.io",
-    rpcUrl: "https://goerli-rollup.arbitrum.io/rpc/",
-  },
-  arbitrum: {
-    name: "arbitrum",
-    color: "#28a0f0",
-    chainId: 42161,
-    blockExplorer: "https://arbiscan.io/",
-    rpcUrl: "https://arb1.arbitrum.io/rpc",
-  },
-  devnetArbitrum: {
-    name: "devnetArbitrum",
-    color: "#28a0f0",
-    chainId: 421612,
-    blockExplorer: "https://nitro-devnet-explorer.arbitrum.io/",
-    rpcUrl: "https://nitro-devnet.arbitrum.io/rpc",
   },
   localAvalanche: {
     name: "localAvalanche",
@@ -199,7 +177,7 @@ export const NETWORKS = {
     color: "#53CBC9",
     chainId: 1284,
     blockExplorer: "https://moonscan.io",
-    rpcUrl: "https://rpc.api.moonbeam.network",
+    rpcUrl: "https://rpc.api.moonbeam.network", 
   },
   moonriver: {
     name: "moonriver",
@@ -222,7 +200,7 @@ export const NETWORKS = {
     chainId: 1281,
     blockExplorer: "https://moonbeam-explorer.netlify.app/",
     rpcUrl: "http://127.0.0.1:9933",
-  },
+  }
 };
 
 export const NETWORK = chainId => {

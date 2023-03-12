@@ -18,8 +18,7 @@ const R = require("ramda");
 
 This deploy script is no longer in use, but is left for reference purposes!
 
-scaffold-eth now uses hardhat-deploy to manage deployments, see the /deploy folder
-And learn more here: https://www.npmjs.com/package/hardhat-deploy
+scaffold-eth now uses 0.4: https://www.npmjs.com/package/hardhat-deploy
 
 */
 

@@ -1,9 +1,7 @@
 {
-  "name": "Scaffold-Eth App",
-  "description": "A Scaffold-Eth App",
-  "iconPath": "logo192.png",
   "short_name": "🏗 Scaffold-Eth App",
   "start_url": ".",
+  "name": "🏗 Scaffold-Eth App",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,6 +19,7 @@
       "sizes": "512x512"
     }
   ],
+  "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

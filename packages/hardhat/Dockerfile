@@ -3,4 +3,5 @@ RUN mkdir -p /code
 WORKDIR /code
 ADD ../.. /code
 EXPOSE 8545
+RUN yarn install
 CMD [ "yarn", "chain" ]
